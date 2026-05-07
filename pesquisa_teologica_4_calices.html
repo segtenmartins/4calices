@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa Teológica: Os Quatro Cálices da Páscoa e a Paixão de Cristo</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8973a;
+    --gold-light: #d4b35a;
+    --gold-pale: #f5ecd0;
+    --crimson: #8b1a1a;
+    --crimson-deep: #5c0f0f;
+    --parchment: #faf6ed;
+    --parchment-dark: #f0e9d6;
+    --ink: #1a130a;
+    --ink-mid: #3a2c1e;
+    --ink-light: #6b5340;
+    --shadow: rgba(26,13,0,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: #1a0f06;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, #2e1a0a 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 90%, #1f0d04 0%, transparent 60%);
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 3rem 1rem;
+  }
+
+  /* ── Scroll progress bar ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--crimson), var(--gold), var(--crimson-deep));
+    z-index: 999;
+    transition: width 0.1s linear;
+  }
+
+  /* ── Main scroll container ── */
+  .scroll-wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ── Page (parchment sheet) ── */
+  .page {
+    background: var(--parchment);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: 2px;
+    box-shadow:
+      0 2px 8px var(--shadow),
+      0 8px 32px var(--shadow),
+      0 0 0 1px rgba(184,151,58,0.25),
+      inset 0 0 60px rgba(184,151,58,0.04);
+    padding: 5rem 5.5rem;
+    position: relative;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Ornamental border ── */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(184,151,58,0.3);
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  /* ── Corner ornaments ── */
+  .corner {
+    position: absolute;
+    width: 28px; height: 28px;
+    color: var(--gold);
+    font-size: 22px;
+    line-height: 1;
+  }
+  .corner.tl { top: 10px; left: 10px; }
+  .corner.tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .corner.bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .corner.br { bottom: 10px; right: 10px; transform: scale(-1); }
+
+  /* ── Header ── */
+  .doc-header {
+    text-align: center;
+    border-bottom: 1px solid rgba(184,151,58,0.4);
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .doc-header .overline {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h1.doc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--crimson-deep);
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+  }
+
+  h1.doc-title .subtitle {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--ink-mid);
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    margin-top: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .divider-ornament {
+    margin: 1.4rem auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: var(--gold);
+    font-size: 1rem;
+  }
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  }
+
+  /* ── Section headings ── */
+  h2.section-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--crimson);
+    letter-spacing: 0.06em;
+    margin: 3rem 0 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(139,26,26,0.2);
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+  }
+  h2.section-heading .num {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  h3.sub-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 2rem 0 0.8rem;
+  }
+
+  h4.sub-sub-heading {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--crimson);
+    margin: 1.4rem 0 0.5rem;
+    font-weight: 600;
+  }
+
+  /* ── Body text ── */
+  p {
+    font-size: 1.08rem;
+    line-height: 1.82;
+    color: var(--ink-mid);
+    margin-bottom: 1rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--crimson); font-style: italic; }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.6rem 0;
+    border-radius: 2px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    font-family: 'Lato', sans-serif;
+  }
+
+  thead tr {
+    background: var(--crimson-deep);
+    color: var(--gold-pale);
+  }
+  thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+
+  tbody tr:nth-child(odd)  { background: rgba(240,233,214,0.55); }
+  tbody tr:nth-child(even) { background: rgba(240,233,214,0.25); }
+  tbody tr:hover           { background: rgba(184,151,58,0.12); }
+
+  tbody td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(184,151,58,0.18);
+    color: var(--ink-mid);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  /* Checkmark/warning column */
+  tbody td:last-child { font-size: 1.0rem; }
+
+  /* ── Highlighted callout ── */
+  .callout {
+    background: linear-gradient(135deg, rgba(139,26,26,0.06), rgba(184,151,58,0.08));
+    border-left: 3px solid var(--gold);
+    padding: 1.1rem 1.4rem;
+    margin: 1.4rem 0;
+    border-radius: 0 2px 2px 0;
+    font-style: italic;
+    color: var(--ink-mid);
+    font-size: 1.06rem;
+    line-height: 1.75;
+  }
+
+  /* ── Final evaluation box ── */
+  .eval-box {
+    background: var(--parchment-dark);
+    border: 1px solid rgba(184,151,58,0.35);
+    border-radius: 2px;
+    padding: 1.4rem 1.8rem;
+    margin: 1.6rem 0;
+  }
+  .eval-box p { margin-bottom: 0.5rem; }
+
+  /* ── Sources list ── */
+  .sources {
+    background: rgba(26,13,0,0.04);
+    border-top: 1px solid rgba(184,151,58,0.3);
+    padding-top: 1.4rem;
+    margin-top: 2.5rem;
+  }
+  .sources .src-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .sources ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sources li {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    padding: 0.3rem 0;
+    border-bottom: 1px dotted rgba(184,151,58,0.2);
+    font-family: 'Lato', sans-serif;
+    line-height: 1.5;
+  }
+  .sources li::before {
+    content: '✦ ';
+    color: var(--gold);
+    font-size: 0.65rem;
+  }
+
+  /* ── Page separator ── */
+  .page-sep {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.4em;
+    margin: 3rem 0;
+    opacity: 0.5;
+  }
+
+  /* ── Second document ── */
+  .page + .page { margin-top: 3rem; animation-delay: 0.15s; }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .page { padding: 3rem 1.8rem; }
+    h1.doc-title { font-size: 1.35rem; }
+    h2.section-heading { font-size: 0.88rem; }
+    p { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="scroll-wrapper">
+
+<!-- ══════════════════════════════════════════════
+     DOCUMENTO 1 — OS QUATRO CÁLICES DA PÁSCOA
+═══════════════════════════════════════════════ -->
+<article class="page">
+  <span class="corner tl">✦</span>
+  <span class="corner tr">✦</span>
+  <span class="corner bl">✦</span>
+  <span class="corner br">✦</span>
+
+  <header class="doc-header">
+    <span class="overline">Pesquisa Teológica Profissional</span>
+    <h1 class="doc-title">
+      Os Quatro Cálices da Páscoa e a Paixão de Cristo
+      <span class="subtitle">Análise exegética, histórica e tipológica</span>
+    </h1>
+    <div class="divider-ornament">✦</div>
+  </header>
+
+  <!-- SEÇÃO 1 -->
+  <h2 class="section-heading"><span class="num">1.</span> Contextualização: O Seder Pascal Judaico</h2>
+
+  <p>A argumentação do vídeo parte de uma base histórico-litúrgica sólida. O <em>Seder</em> (ordenança) da Páscoa judaica, conforme codificado na <em>Mishná</em> (tratado <em>Pesahim</em>, séc. II d.C.), prescreve quatro cálices de vinho, cada um correspondendo a uma das quatro expressões de redenção em <strong>Êxodo 6:6-7</strong>:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cálice</th>
+          <th>Nome</th>
+          <th>Referência em Êx 6</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1º</td><td><strong>Cálice da Santificação</strong> (<em>Kiddush</em>)</td><td>"Eu vos tirarei"</td></tr>
+        <tr><td>2º</td><td><strong>Cálice da Instrução/Pragas</strong></td><td>"Eu vos livrarei"</td></tr>
+        <tr><td>3º</td><td><strong>Cálice da Redenção/Bênção</strong></td><td>"Eu vos resgatarei"</td></tr>
+        <tr><td>4º</td><td><strong>Cálice da Consumação/Louvor</strong></td><td>"Eu vos tomarei"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Entre o 3º e o 4º cálice, cantava-se o <em>Hallel</em> completo (Salmos 115–118), e o 4º cálice encerrava formalmente o rito.</p>
+
+  <p><strong>Avaliação:</strong> A base histórica está bem fundamentada. Fontes como <em>Mishná Pesahim</em> 10, Joachim Jeremias (<em>The Eucharistic Words of Jesus</em>, 1966) e o rabino David Daube confirmam esse padrão ritual.</p>
+
+  <!-- SEÇÃO 2 -->
+  <h2 class="section-heading"><span class="num">2.</span> O Argumento Central: Jesus Teria Interrompido o Seder no 3º Cálice?</h2>
+
+  <p>O vídeo propõe que:</p>
+
+  <div class="callout">
+    Jesus consagrou o 3º cálice (da Bênção) como seu sangue — mas não bebeu o 4º (da Consumação) naquele momento, reservando-o para a Cruz.
+  </div>
+
+  <h3 class="sub-heading">Evidências textuais citadas</h3>
+
+  <h4 class="sub-sub-heading">A) 1 Coríntios 10:16</h4>
+  <p>Paulo chama o cálice eucarístico de <em>"cálice da bênção"</em> (<em>to potérion tēs eulogías</em>), que é exatamente o nome técnico judaico do <strong>3º cálice</strong>. Isso é academicamente reconhecido e citado por Jeremias, Raymond Brown e N.T. Wright como forte indício de que a Eucaristia foi instituída sobre o 3º cálice.</p>
+
+  <h4 class="sub-sub-heading">B) Mateus 26:29</h4>
+  <p>Jesus declara: <em>"Não beberei mais deste fruto da videira até aquele dia em que o beber novo convosco no Reino do meu Pai."</em> Isso sugere uma <strong>suspensão deliberada</strong> do rito — o 4º cálice ficou intencionalmente por completar.</p>
+
+  <h4 class="sub-sub-heading">C) O cálice no Getsêmani (Mateus 26:39,42)</h4>
+  <p>Quando Jesus ora <em>"afasta de mim este cálice"</em>, o vídeo sugere que ele sabia que teria de bebê-lo. A palavra <em>potérion</em> (cálice) conecta as cenas narrativamente — argumento literário-teológico plausível.</p>
+
+  <h4 class="sub-sub-heading">D) Mateus 27:34</h4>
+  <p>Na Cruz, Jesus recusa o vinho misturado com fel (<em>oínon meta kholēs</em>). Recusa que pode indicar que <strong>ainda não era o momento</strong> de beber o cálice final.</p>
+
+  <h4 class="sub-sub-heading">E) João 19:28-30</h4>
+  <p>O clímax: Jesus diz <em>"Tenho sede"</em>, recebe vinagre (<em>óxos</em>), bebe, e diz <em>"Está consumado"</em> (<em>tetelestai</em>) — e entrega o espírito.</p>
+
+  <!-- SEÇÃO 3 -->
+  <h2 class="section-heading"><span class="num">3.</span> Análise Teológica dos Argumentos</h2>
+
+  <h3 class="sub-heading">3.1 Pontos de sólido suporte acadêmico</h3>
+
+  <p>O argumento possui respaldo em teólogos e exegetas sérios:</p>
+
+  <ul style="margin: 0.8rem 0 1rem 1.5rem; line-height: 2.0; color: var(--ink-mid); font-size: 1.05rem;">
+    <li><strong>Joachim Jeremias</strong> (<em>The Eucharistic Words of Jesus</em>): identificou o 3º cálice como o cálice da instituição eucarística e notou a ausência do 4º cálice nos relatos sinóticos.</li>
+    <li><strong>Brant Pitre</strong> (<em>Jesus and the Jewish Roots of the Eucharist</em>, 2011): desenvolve extensamente exatamente este argumento — que o 4º cálice foi consumado na Cruz. É a obra acadêmica mais completa sobre o tema, amplamente citada.</li>
+    <li><strong>Scott Hahn</strong> (<em>The Lamb's Supper</em>, 1999): abordagem teológica da mesma conexão, com ênfase na tipologia pascal.</li>
+    <li><strong>Raymond Brown</strong> (<em>The Death of the Messiah</em>, 1994): reconhece a complexidade cronológica dos relatos da Paixão e a verossimilhança das conexões com o Seder.</li>
+  </ul>
+
+  <h3 class="sub-heading">3.2 Tensões e ressalvas teológicas legítimas</h3>
+
+  <p>O pesquisador honesto deve registrar os seguintes pontos de debate:</p>
+
+  <h4 class="sub-sub-heading">a) O Seder do séc. I era idêntico ao Seder posterior?</h4>
+  <p>A <em>Mishná Pesahim</em> foi redigida por volta de 200 d.C. Há debate sobre se o protocolo dos 4 cálices já era rigidamente observado no tempo de Jesus, ou se foi sistematizado apenas após a destruição do Templo (70 d.C.). Estudiosos como <strong>E.P. Sanders</strong> e <strong>Jacob Neusner</strong> pedem cautela na retroprojeção de práticas rabínicas tardias para o séc. I.</p>
+
+  <h4 class="sub-sub-heading">b) A Última Ceia era de fato um Seder?</h4>
+  <p>João data a crucificação na véspera da Páscoa (<em>14 de Nisã</em> — Jo 18:28; 19:14), enquanto os Sinóticos parecem datar a Ceia <em>na</em> noite pascal (<em>15 de Nisã</em>). Esse debate cronológico clássico — ainda não resolvido — afeta a identificação da Ceia com um Seder formal.</p>
+
+  <h4 class="sub-sub-heading">c) O "vinagre" como 4º cálice é tipologia ou literalidade?</h4>
+  <p>O <em>óxos</em> (vinagre/vinho azedo) oferecido na Cruz era um líquido comum dado a soldados e crucificados — não necessariamente vinho ritual. A interpretação tipológica (vinagre = 4º cálice da consumação) é <strong>teologicamente fecunda</strong>, mas é uma leitura intertextual, não uma afirmação literal direta do texto.</p>
+
+  <!-- SEÇÃO 4 -->
+  <h2 class="section-heading"><span class="num">4.</span> Avaliação da Argumentação Bíblica Intertextual</h2>
+
+  <p>O vídeo apresenta corretamente as seguintes conexões intertextuais:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Texto</th>
+          <th>Conexão identificada</th>
+          <th>Avaliação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1 Co 10:16</td><td>"Cálice da Bênção" = 3º cálice</td><td>✅ Academicamente sólido</td></tr>
+        <tr><td>Mt 26:29</td><td>Jesus suspende o rito</td><td>✅ Exegeticamente defensável</td></tr>
+        <tr><td>Mt 26:39</td><td>Getsêmani como cálice pendente</td><td>✅ Conexão literária válida</td></tr>
+        <tr><td>Mt 27:34</td><td>Recusa do vinho na Cruz</td><td>✅ Dado relevante</td></tr>
+        <tr><td>Jo 19:28-30</td><td><em>Tetelestai</em> + vinagre = consumação</td><td>✅ Argumento tipológico forte</td></tr>
+        <tr><td>Sl 69:21</td><td>Cumprimento profético do vinagre</td><td>✅ Citação adequada</td></tr>
+        <tr><td>Rm 5:8</td><td>Justificação pelo sangue de Cristo</td><td>✅ Uso correto do texto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEÇÃO 5 -->
+  <h2 class="section-heading"><span class="num">5.</span> Dimensão Tipológica: Cordeiro Pascal e Sacrifício de Cristo</h2>
+
+  <p>O argumento final do vídeo — de que Jesus é o <strong>cordeiro pascal</strong> que consuma a redenção — é teologicamente central e bem fundamentado nas Escrituras:</p>
+
+  <ul style="margin: 0.8rem 0 1rem 1.5rem; line-height: 2.0; color: var(--ink-mid); font-size: 1.05rem;">
+    <li><strong>1 Co 5:7:</strong> <em>"Cristo, nosso Cordeiro Pascal, foi imolado."</em></li>
+    <li><strong>João 1:29:</strong> <em>"Eis o Cordeiro de Deus que tira o pecado do mundo."</em></li>
+    <li><strong>Hebreus 9:26:</strong> <em>"uma vez por todas, na consumação dos séculos, manifestou-se para anular o pecado pelo seu sacrifício."</em></li>
+    <li><strong>Hebreus 10:10,14:</strong> o sacrifício perfeito, único e suficiente (<em>ephápax</em> — de uma vez por todas).</li>
+  </ul>
+
+  <p>A tipologia Êxodo → Paixão é estrutural na teologia neotestamentária e não é invenção do vídeo — é o fio condutor de toda a teologia da redenção desde Paulo, João, o autor de Hebreus e os Pais da Igreja.</p>
+
+  <!-- SEÇÃO 6 -->
+  <h2 class="section-heading"><span class="num">6.</span> Conclusão Avaliativa</h2>
+
+  <p><strong>O argumento do vídeo é:</strong></p>
+
+  <div class="eval-box">
+    <p>✅ <strong>Biblicamente fundamentado</strong> — todas as passagens citadas são reais, no contexto adequado e exegeticamente coerentes.</p>
+    <p>✅ <strong>Historicamente informado</strong> — a referência ao Seder e aos quatro cálices é historicamente documentada.</p>
+    <p>✅ <strong>Teologicamente fecundo</strong> — a tipologia pascal (Êxodo → Última Ceia → Cruz) é uma das mais ricas da Escritura.</p>
+    <p>⚠️ <strong>Parcialmente especulativo</strong> — a identificação do vinagre com o 4º cálice ritual é uma <em>leitura tipológica</em>, não uma afirmação exegética literal; deve ser apresentada como tal.</p>
+    <p>⚠️ <strong>Historicamente cauteloso</strong> — a aplicação retroativa do Seder rabínico ao séc. I exige a ressalva do debate acadêmico em aberto.</p>
+  </div>
+
+  <p><strong>Em suma:</strong> trata-se de um argumento teológico de alta qualidade, presente na literatura acadêmica séria (Jeremias, Pitre, Brown), apresentado de forma acessível e espiritualmente edificante. A ressalva honesta que cabe fazer é distinguir entre o que é dado exegético firme e o que é inferência tipológica — distinção que não invalida o argumento, mas o situa corretamente como <em>teologia bíblica</em> e não como <em>dogma exegético</em>.</p>
+
+  <div class="sources">
+    <p class="src-title">Fontes de Referência</p>
+    <ul>
+      <li>Jeremias, J. — <em>The Eucharistic Words of Jesus</em> (1966)</li>
+      <li>Pitre, B. — <em>Jesus and the Jewish Roots of the Eucharist</em> (2011)</li>
+      <li>Brown, R.E. — <em>The Death of the Messiah</em> (1994)</li>
+      <li>Mishná, tratado <em>Pesahim</em>, cap. 10</li>
+      <li>Hahn, S. — <em>The Lamb's Supper</em> (1999)</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ══════════════════════════════════════════════
+     DOCUMENTO 2 — O QUINTO CÁLICE
+═══════════════════════════════════════════════ -->
+<div class="page-sep">· · ✦ · ·</div>
+
+<article class="page">
+  <span class="corner tl">✦</span>
+  <span class="corner tr">✦</span>
+  <span class="corner bl">✦</span>
+  <span class="corner br">✦</span>
+
+  <header class="doc-header">
+    <span class="overline">Pesquisa Teológica Profissional — Complemento</span>
+    <h1 class="doc-title">
+      O Quinto Cálice: O Cálice de Elias (<em>Kos Eliahu</em>)
+      <span class="subtitle">Dimensão escatológica do Seder pascal e sua tipologia cristã</span>
+    </h1>
+    <div class="divider-ornament">✦</div>
+  </header>
+
+  <!-- SEÇÃO 1 -->
+  <h2 class="section-heading"><span class="num">1.</span> O que é o Quinto Cálice?</h2>
+
+  <p>Um dos componentes místicos do Seder de Pessach é o Copo de Eliahu — o quinto copo de vinho que é servido, mas do qual <strong>não se bebe</strong> — em homenagem a Eliahu HaNavi (o profeta Elias), que anunciará a vinda do Mashiach (Messias).</p>
+
+  <p>Ao terminar a ceia, manda-se uma criança à porta para abrir e ver se Elias está lá. Todos os anos, o menino regressa desanimado e o vinho é derramado sem ninguém o beber.</p>
+
+  <p>Este cálice especial, maior que os demais, simbolicamente entra em cada um dos lares judaicos e os abençoa — mas <strong>dele não se bebe; ele é deixado na mesa</strong>.</p>
+
+  <!-- SEÇÃO 2 -->
+  <h2 class="section-heading"><span class="num">2.</span> Por que existe esse quinto cálice?</h2>
+
+  <p>A origem do quinto cálice está num <strong>debate rabínico não resolvido</strong> sobre Êxodo 6. O texto hebraico apresenta <strong>cinco verbos de redenção</strong> (vv. 6-8):</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Verbo hebraico</th>
+          <th>Promessa</th>
+          <th>Cálice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><em>Ve-hotzeiti</em></td><td>"Eu vos tirarei"</td><td>1º Cálice</td></tr>
+        <tr><td><em>Ve-hitzalti</em></td><td>"Eu vos livrarei"</td><td>2º Cálice</td></tr>
+        <tr><td><em>Ve-ga'alti</em></td><td>"Eu vos resgatarei"</td><td>3º Cálice</td></tr>
+        <tr><td><em>Ve-lakahti</em></td><td>"Eu vos tomarei"</td><td>4º Cálice</td></tr>
+        <tr><td><em>Ve-heveiti</em></td><td>"Eu vos trarei à terra"</td><td><strong>5º Cálice (de Elias)</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>A quinta promessa, embora não conste nas prescrições formais do Seder, encontra-se em grande parte das Escrituras e fala da <strong>glorificação dos redimidos</strong>. O rabino Herbert Bronstein, editor da Hagadá de Pessach, registrou sobre o quinto cálice: <em>"O ritual de um cálice adicional de vinho, certamente nasceu em nosso tempo..."</em> — por isso muitos consideram apenas os quatro cálices como parte integrante do Seder.</p>
+
+  <p>O Talmude não chegou a um consenso sobre se o quinto versículo de Êxodo 6:8 deveria gerar um quinto cálice obrigatório. A solução foi: <strong>servir o cálice, mas deixá-lo para Elias decidir</strong> — pois a tradição judaica estabelece que Elias virá resolver todas as questões haláchicas (legais) em aberto antes do fim dos tempos.</p>
+
+  <!-- SEÇÃO 3 -->
+  <h2 class="section-heading"><span class="num">3.</span> O Simbolismo de Elias e sua Dimensão Messiânica</h2>
+
+  <p>A tradição judaica ensina que o Profeta Elias visita todos os Sedarim. Com o Copo de Eliahu, a cerimônia não apenas celebra a redenção histórica do povo judeu da escravidão egípcia, mas também <strong>chama a atenção para sua futura redenção</strong>.</p>
+
+  <p>Isso é teologicamente central: o 5º cálice <strong>não pertence ao presente</strong> — ele pertence à era messiânica. O judaísmo o preserva como um <strong>cálice da esperança escatológica</strong>, ainda em aberto, aguardando o Messias.</p>
+
+  <!-- SEÇÃO 4 -->
+  <h2 class="section-heading"><span class="num">4.</span> Dimensão Teológica Cristã — Onde isso se Encaixa</h2>
+
+  <h3 class="sub-heading">a) Jesus e o 5º cálice implícito</h3>
+
+  <p>O vídeo argumentou que Jesus não bebeu o <strong>4º cálice</strong> na Última Ceia — reservando-o para a Cruz. Mas há uma camada adicional: o <strong>5º cálice de Elias</strong>, que no judaísmo aponta para o Messias vindouro, encontra sua resposta tipológica em Jesus mesmo.</p>
+
+  <p>Esse cálice é reservado para o futuro, quando Cristo voltar para buscar sua noiva e estabelecer o Reino. Nas Bodas do Cordeiro, todos os redimidos tomarão esse cálice com Cristo, celebrando a consumação da promessa feita em Êxodo 6:7 — <em>"E eles serão o meu povo, e eu mesmo estarei com eles e serei o seu Deus"</em> (Ap 21:3).</p>
+
+  <h3 class="sub-heading">b) João Batista como Elias</h3>
+
+  <p>O próprio Jesus identificou João Batista como o "Elias que há de vir" (Mt 11:14; 17:12-13). Isso significa que o anunciador do Messias — cuja chegada era aguardada para "beber o 5º cálice" — <strong>já veio</strong>. O 5º cálice, portanto, na leitura cristã, não permanece vazio: ele aguarda a <strong>segunda vinda</strong> e o banquete escatológico final.</p>
+
+  <h3 class="sub-heading">c) A ceia do Reino</h3>
+
+  <p>Em Lucas 22:18, Jesus diz: <em>"Digo-vos que não beberei mais do fruto da videira até que venha o Reino de Deus."</em> Esta frase ecoa diretamente o espírito do 5º cálice judaico — um vinho que ainda não foi bebido, que espera a consumação plena do Reino.</p>
+
+  <!-- SEÇÃO 5 -->
+  <h2 class="section-heading"><span class="num">5.</span> Esquema Completo: Os 5 Cálices e sua Tipologia</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cálice</th>
+          <th>Nome judaico</th>
+          <th>Promessa (Êx 6)</th>
+          <th>Tipologia cristã</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1º</td>
+          <td>Santificação (<em>Kiddush</em>)</td>
+          <td>"Vos tirarei"</td>
+          <td>Separação do pecado — 1 Ts 4:7</td>
+        </tr>
+        <tr>
+          <td>2º</td>
+          <td>Redenção/Pragas</td>
+          <td>"Vos livrarei"</td>
+          <td>Libertação — Rm 8:2</td>
+        </tr>
+        <tr>
+          <td>3º</td>
+          <td><strong>Bênção</strong> (instituído por Jesus)</td>
+          <td>"Vos resgatarei"</td>
+          <td>Eucaristia — 1 Co 10:16</td>
+        </tr>
+        <tr>
+          <td>4º</td>
+          <td>Consumação</td>
+          <td>"Vos tomarei"</td>
+          <td><strong>Cruz — Jo 19:30</strong> "Está consumado"</td>
+        </tr>
+        <tr>
+          <td>5º</td>
+          <td><strong>Cálice de Elias</strong> (não é bebido)</td>
+          <td>"Vos trarei à terra"</td>
+          <td><strong>Segunda Vinda — Ap 19:9</strong> Bodas do Cordeiro</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEÇÃO 6 -->
+  <h2 class="section-heading"><span class="num">6.</span> Conclusão Avaliativa</h2>
+
+  <p>O quinto cálice acrescenta uma <strong>dimensão escatológica extraordinária</strong> à tipologia pascal. Enquanto o vídeo analisado concentrou-se na relação entre os 4 cálices e a Paixão de Cristo, o 5º cálice revela que o Seder judaico carrega em si mesmo uma <strong>incompletude intencional</strong> — um espaço vazio que aguarda o Messias.</p>
+
+  <p>Para a teologia cristã, isso é profundamente significativo:</p>
+
+  <div class="eval-box">
+    <p>O <strong>3º cálice</strong> = Eucaristia (o que já foi dado)</p>
+    <p>O <strong>4º cálice</strong> = Cruz (o que foi consumado)</p>
+    <p>O <strong>5º cálice</strong> = Parusia (o que ainda virá)</p>
+  </div>
+
+  <p>A Páscoa judaica, portanto, não é apenas memorial do passado nem só tipologia da Cruz — ela aponta para <strong>três momentos da redenção</strong>: Encarnação/Eucaristia, Paixão e Glorificação final. O cálice de Elias permanece cheio sobre a mesa de cada família judaica no mundo todo — um silêncio eloquente que, na leitura cristã, clama pela volta dAquele que disse: <em>"Farei isso de novo convosco no Reino de meu Pai"</em> (Mt 26:29).</p>
+
+</article>
+
+</div><!-- /scroll-wrapper -->
+
+<script>
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+  });
+</script>
+</body>
+</html>
